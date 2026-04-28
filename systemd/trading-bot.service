@@ -1,0 +1,15 @@
+[Unit]
+Description=ETH/USDT Trading Bot
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/trading-bot-infra
+Environment="PATH=/opt/trading-bot-infra/venv/bin"
+ExecStart=/opt/trading-bot-infra/venv/bin/python /opt/trading-bot-infra/bot/main.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
