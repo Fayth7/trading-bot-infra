@@ -78,6 +78,53 @@ Environment variables (never hardcoded)
 
 Encrypted credential storage
 
+## Production Deployment on GCP
+
+### One-Click Deploy
+
+```bash
+# SSH into your GCP VM
+gcloud compute ssh trading-bot-vm
+
+# Run deployment script
+curl -sSL https://raw.githubusercontent.com/Fayth7/trading-bot-infra/main/scripts/deploy.sh | bash
+
+Manual Deployment
+# 1. Clone repository
+git clone https://github.com/Fayth7/trading-bot-infra.git
+cd trading-bot-infra
+
+# 2. Configure environment
+cp .env.example .env
+nano .env  # Add your Binance API keys
+
+# 3. Run with Docker
+docker-compose up -d
+
+# 4. Check logs
+docker-compose logs -f
+
+Run as Systemd Service
+# Copy service file
+sudo cp systemd/trading-bot.service /etc/systemd/system/
+
+# Start service
+sudo systemctl enable trading-bot
+sudo systemctl start trading-bot
+
+# Check status
+sudo systemctl status trading-bot
+
+# View logs
+sudo journalctl -u trading-bot -f
+
+Testing
+# Run unit tests
+make test
+
+# Or manually
+python -m pytest tests/ -v
+
 Author
 Faith Ampwera - DevOps Backend Engineer
 
